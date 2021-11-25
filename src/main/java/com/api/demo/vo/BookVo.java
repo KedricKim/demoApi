@@ -28,13 +28,13 @@ public class BookVo {
     private int idx;
     
     @Column(nullable = false)
-    private String category;
+    private String category; // 카테고리
 
-    private String writer;
-    private String title;
-    private String rentYn;
-    private String useYn;
-    private String reason;
+    private String writer; // 지은이
+    private String title; // 책 제목
+    private String rentYn; // 렌트여부
+    private String useYn; // 사용가능 여부
+    private String reason; // 사용불가 이유
 
     @Builder
     public BookVo(String category, String writer, String title, String rentYn, String useYn, String reason){

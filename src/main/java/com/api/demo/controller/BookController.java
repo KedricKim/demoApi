@@ -28,18 +28,33 @@ public class BookController {
 
     private HttpStatus httpStatus = HttpStatus.OK;
 
+    /**
+     * 책 찾기 - 지은이 or 책 제목으로 책 찾기
+     * @param bookVo
+     * @return
+     */
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<BookVo>> getBooksByTitleOrWriter(@RequestBody BookVo bookVo){
         List<BookVo> books = bookService.findByTitleContainingOrWriterContaining(bookVo);
         return new ResponseEntity<List<BookVo>>(books, httpStatus);
     }
 
+    /**
+     * 카테고리별로 책 찾기
+     * @param bookVo
+     * @return
+     */
     @GetMapping(value = "/search/category", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<BookVo>> getBooksByCategory(@RequestBody BookVo bookVo){
         List<BookVo> books = bookService.findByCategoryContaining(bookVo.getCategory());
         return new ResponseEntity<List<BookVo>>(books, httpStatus);
     }
 
+    /**
+     * 새로운 도서 저장 - 카테고리 없을 시 400
+     * @param bookVo
+     * @return
+     */
     @PostMapping
     public ResponseEntity postBook(@RequestBody BookVo bookVo) {
         BookVo books = bookService.postBook(bookVo);
@@ -48,6 +63,12 @@ public class BookController {
         return new ResponseEntity(httpStatus);
     }
     
+    /**
+     * 책 카테고리 수정 - 카테고리 없을 시 400
+     * @param idx
+     * @param bookVo
+     * @return
+     */
     @PutMapping(value="/{idx}")
     public ResponseEntity putBookCategory(@PathVariable int idx, @RequestBody BookVo bookVo) {
         int result = bookService.putBookCategory(bookVo.getCategory(), idx);
@@ -55,6 +76,12 @@ public class BookController {
         return new ResponseEntity(httpStatus);
     }
 
+    /**
+     * 대여 중단 및 이유 등록
+     * @param idx
+     * @param bookVo
+     * @return
+     */
     @PutMapping(value="/use/{idx}")
     public ResponseEntity putBookUse(@PathVariable int idx, @RequestBody BookVo bookVo) {
         int result = bookService.putBookUse(idx, bookVo.getUseYn(), bookVo.getReason());

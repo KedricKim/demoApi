@@ -18,12 +18,6 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<BookVo> findAll(){
-        List<BookVo> books = new ArrayList<>();
-        bookRepository.findAll().forEach(e -> books.add(e));
-        return books;
-    }
-
     public List<BookVo> findByCategoryContaining(String category){
         List<BookVo> books = bookRepository.findByCategoryContaining(category);
         return books;
